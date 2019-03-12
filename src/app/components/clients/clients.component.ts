@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
 
-import { Client } from '../../models/Client'
+import { Client } from '../../models/Client';
 
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
+  providers: [ClientService],
   styleUrls: ['./clients.component.css']
 })
+
 export class ClientsComponent implements OnInit {
   clients: Client[];
   totalOwed: number;
@@ -17,16 +19,14 @@ export class ClientsComponent implements OnInit {
   ngOnInit() {
     this.clientService.getClients().subscribe(clients => {
       this.clients = clients;
-      this.getTotalOwed()
+      this.getTotalOwed();
     });
   }
 
-  getTotalOwed(){
+  getTotalOwed() {
     this.totalOwed = this.clients.reduce((total, client) => {
-      return total + client.balance;
-    }, 0)
-
-    
+      return total + parseFloat(client.balance.toString());
+    }, 0);
   }
 
 }
