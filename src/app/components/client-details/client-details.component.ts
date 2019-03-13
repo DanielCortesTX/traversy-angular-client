@@ -8,7 +8,6 @@ import { FlashMessagesModule } from 'angular2-flash-messages/module/module';
 @Component({
   selector: 'app-client-details',
   templateUrl: './client-details.component.html',
-  providers: [ClientService],
   styleUrls: ['./client-details.component.css']
 })
 export class ClientDetailsComponent implements OnInit {
@@ -44,6 +43,16 @@ export class ClientDetailsComponent implements OnInit {
     this.flashMessage.show('Balance updated', {
       cssClass: 'alert-success', timeout: 4000
     });
+  }
+
+  onDeleteClick() { 
+    if(confirm('Are you sure?')) {
+      this.clientService.deleteClient(this.client);
+      this.flashMessage.show('Client removed', {
+        cssClass: 'alert-success', timeout: 4000
+      });
+      this.router.navigate(['/']);
+    }
   }
 
 }
